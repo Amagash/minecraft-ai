@@ -1,0 +1,38 @@
+{
+  "name": "minecraft-aws",
+  "version": "1.0.0",
+  "description": "Controlling a Minecraft bot using generative AI on AWS",
+  "type": "module",
+  "scripts": {
+    "start": "cross-env DEBUG=minecraft-aws* nodemon --inspect cli.js start"
+  },
+  "keywords": [
+    "minecraft",
+    "aws",
+    "gpt-3",
+    "bot",
+    "ai",
+    "minecraft-bot",
+    "minecraft-ai",
+    "minecraft-aws"
+  ],
+  "author": "Tiffany Souterre <souterre@amazon.fr>",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.515.0",
+    "commander": "^9.2.0",
+    "cross-env": "^7.0.3",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.0",
+    "isomorphic-fetch": "^3.0.0",
+    "minecraft-data": "^3.0.0",
+    "mineflayer": "^4.19.0",
+    "mineflayer-collectblock": "^1.3.4",
+    "mineflayer-pathfinder": "^2.0.0",
+    "nodemon": "^2.0.15",
+    "prismarine-viewer": "^1.21.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
