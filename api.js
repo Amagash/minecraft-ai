@@ -1,9 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import {fileURLToPath} from "url";
+import { fileURLToPath } from "url";
 
-import {BedrockRuntimeClient, InvokeModelCommand} from "@aws-sdk/client-bedrock-runtime";
+import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
+import { BedrockAgentRuntimeClient, RetrieveAndGenerateCommand } from "@aws-sdk/client-bedrock-agent-runtime"; // ES Modules import
+    
+
 const STOP_WORD = "//";
 const EOL = "\n";
 /**
@@ -19,7 +22,7 @@ const EOL = "\n";
  * @returns {string} The inference response (completion) from the model.
  */
 export const invokeClaude = async (prompt, context) => {
-    const client = new BedrockRuntimeClient( { region: 'us-east-1' } );
+    const client = new BedrockRuntimeClient({ region: 'us-east-1' });
 
     const modelId = 'anthropic.claude-v2';
 
@@ -34,7 +37,7 @@ export const invokeClaude = async (prompt, context) => {
         prompt: enclosedPrompt,
         max_tokens_to_sample: 500,
         temperature: 0.5,
-        stop_sequences: [ '\n\nHuman:' ],
+        stop_sequences: ['\n\nHuman:'],
     };
 
     console.log("payload %o", payload);
@@ -72,3 +75,25 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.log('\n');
 }
 
+
+// export const callRag = async (prompt) => {
+//     // const { BedrockAgentRuntimeClient, RetrieveAndGenerateCommand } = require("@aws-sdk/client-bedrock-agent-runtime"); // CommonJS import
+//     const client = new BedrockAgentRuntimeClient({ region: 'us-east-1' });
+
+//     const enclosedPrompt = `Human: ${prompt}\n\nAssistant:`;
+
+//     const input = { // RetrieveAndGenerateRequest
+//         input: { // RetrieveAndGenerateInput
+//             text: enclosedPrompt, // required
+//         },
+//         retrieveAndGenerateConfiguration: { // RetrieveAndGenerateConfiguration
+//             type: "KNOWLEDGE_BASE", // required
+//             knowledgeBaseConfiguration: { // KnowledgeBaseRetrieveAndGenerateConfiguration
+//                 knowledgeBaseId: "HOJS5MA1XL", // required
+//                 modelArn: "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-v2:1", // required
+//             },
+//         },
+//     };
+//     const command = new RetrieveAndGenerateCommand(input);
+//     const response = await client.send(command);
+// }
