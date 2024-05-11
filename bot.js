@@ -109,7 +109,7 @@ export default async function bot(host, port, username) {
 
         // update the context for the next time
         // Note: we only update context if the code is valid
-        updateContext(input, response);
+        // updateContext(input, response);
       } catch (err) {
         error("error: %s", err.message);
         bot.chat(`error: ${err.message}`);
