@@ -15,6 +15,17 @@ const EOL = "\n";
  */
 
 /**
+ * Replaces the [[MESSAGE]] tag in the given string with the provided message.
+ * 
+ * @param {string} str - The string containing the [[MESSAGE]] tag.
+ * @param {string} message - The message to replace the tag with.
+ * @returns {string} The string with the [[MESSAGE]] tag replaced by the message.
+ */
+export const replaceMessageTag = (str, message) => {
+    return str.replace('[[MESSAGE]]', message);
+};
+
+/**
  * Invokes the Anthropic Claude 2 model to run an inference using the input
  * provided in the request body.
  *
@@ -27,7 +38,7 @@ export const invokeClaude = async (prompt, context) => {
     const modelId = 'anthropic.claude-v2';
 
     /* Claude requires you to enclose the prompt as follows: */
-    const enclosedPrompt = `Human: ${context}${EOL}${STOP_WORD}${prompt}\n\nAssistant:`;
+    const enclosedPrompt = replaceMessageTag(`Human: ${context}${EOL}${STOP_WORD}\n\nAssistant:`, prompt);
     console.log("payload %o", enclosedPrompt);
     /* The different model providers have individual request and response formats.
      * For the format, ranges, and default values for Anthropic Claude, refer to:
