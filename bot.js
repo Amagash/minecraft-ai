@@ -2,7 +2,7 @@ import debug from "debug";
 import minecraftData from "minecraft-data";
 import mineflayer from "mineflayer";
 import { mineflayer as mineflayerViewer } from "prismarine-viewer";
-import { invokeClaude } from "./api.js";
+import { invokeClaude, extractCodeSnippet } from "./api.js";
 import {
   context,
   updateContext,
@@ -77,6 +77,8 @@ export default async function bot(host, port, username) {
 
     if (response) {
       console.log(`response: ${response}`);
+      const code = extractCodeSnippet(response);
+      console.log(`code: ${code}`);
       // log("request: %s", response.id);
       // log("codex: %s", response.model);
       // log("choices: %o", response.choices);
@@ -97,7 +99,7 @@ export default async function bot(host, port, username) {
         // Note: the code is executed in the context of the bot entity
         await eval(`(async function inject() { 
           try {
-            ${response}
+            ${code}
           } 
           catch(err){
             error("error: %s", err.message);
@@ -112,7 +114,6 @@ export default async function bot(host, port, username) {
         error("error: %s", err.message);
         bot.chat(`error: ${err.message}`);
       }
-      bot.chat(response);
     } else {
       log("Claude response was empty. Ignore.");
     }

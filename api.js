@@ -86,6 +86,11 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.log('\n');
 }
 
+export function extractCodeSnippet(response) {
+    const codeRegex = /<code>(.*?)<\/code>/s;
+    const match = response.match(codeRegex);
+    return match ? match[1] : '';
+    }
 
 // export const callRag = async (prompt) => {
 //     // const { BedrockAgentRuntimeClient, RetrieveAndGenerateCommand } = require("@aws-sdk/client-bedrock-agent-runtime"); // CommonJS import
